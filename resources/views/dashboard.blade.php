@@ -1,1 +1,1 @@
-@include('partials.navigation.sidebar')
+@include('layouts.partials.main')

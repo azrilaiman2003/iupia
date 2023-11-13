@@ -28,7 +28,13 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('me/logbook','App\Http\Controllers\LogBookController@index')->name('logbook');
-});
+    //LogBook
+    Route::get('me/logbook','App\Http\Controllers\LogbookController@index')->name('logbook');
+    Route::get('me/logbook/create','App\Http\Controllers\LogbookController@create')->name('logbook.create');
+    Route::post('me/logbook/store','App\Http\Controllers\LogbookController@store')->name('logbook.store');
+    Route::get('me/logbook/{logbook}','App\Http\Controllers\LogbookController@show')->name('logbook.show');
+    Route::get('me/logbook/{logbook}/edit','App\Http\Controllers\LogbookController@edit')->name('logbook.edit');
+    Route::put('me/logbook/{logbook}','App\Http\Controllers\LogbookController@update')->name('logbook.update');
+    Route::get('me/logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
 
-//buku laporan
+});
