@@ -31,5 +31,13 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('supervisors')->insert([
+            'name' => 'Supervisor',
+            'email' => 'supervisor@gmail.com',
+            'password' => Hash::make('ayam12345'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

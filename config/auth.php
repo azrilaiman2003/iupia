@@ -50,6 +50,11 @@ return [
             'driver' => 'session',
             'provider' => 'industrial',
         ],
+
+        'supervisor' => [
+            'driver' => 'session',
+            'provider' => 'supervisors',
+        ],
     ],
 
     /*
@@ -83,6 +88,11 @@ return [
         'industrial' => [
             'driver' => 'eloquent',
             'model' => App\Models\Industry::class,
+        ],
+
+        'supervisors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Supervisor::class,
         ],
 
         // 'users' => [

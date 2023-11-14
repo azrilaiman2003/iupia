@@ -52,7 +52,7 @@ Route::middleware(['auth:student'])->group(function () {
 });
 
 
-// Routes for industry
+// Routes for industrial supervisors
 Route::get('/industry/login', [App\Http\Controllers\Auth\IndustryLoginController::class, 'showLoginForm'])->name('industry.login');
 Route::post('/industry/login', [App\Http\Controllers\Auth\IndustryLoginController::class, 'login']);;
 Route::middleware(['auth:industry'])->group(function () {
@@ -62,6 +62,24 @@ Route::middleware(['auth:industry'])->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
+        //LogBook
+        Route::resource('logbook', App\Http\Controllers\LogbookController::class);
+        Route::get('logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+    });
+});
+
+// Routes for College supervisors
+Route::get('/supervisor/login', [App\Http\Controllers\Auth\SupervisorLoginController::class, 'showLoginForm'])->name('supervisor.login');
+Route::post('/supervisor/login', [App\Http\Controllers\Auth\SupervisorLoginController::class, 'login']);;
+Route::middleware(['auth:supervisor'])->group(function () {
+
+    Route::group(['prefix' => 'supervisor', 'as' => 'supervisor.'], function () {
+
+        Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
+
+        //Student
+        Route::get('student', [App\Http\Controllers\StudentController::class, 'index'])->name('student.index');
+
         //LogBook
         Route::resource('logbook', App\Http\Controllers\LogbookController::class);
         Route::get('logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
