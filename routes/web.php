@@ -85,3 +85,28 @@ Route::middleware(['auth:supervisor'])->group(function () {
         Route::get('logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
     });
 });
+
+// Routes for Admin
+Route::get('/admin/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'login']);;
+Route::middleware(['auth:admin'])->group(function () {
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+
+        Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
+
+        //Student
+        Route::get('student', [App\Http\Controllers\StudentController::class, 'index'])->name('student.index');
+
+        //LogBook
+        Route::resource('logbook', App\Http\Controllers\LogbookController::class);
+        Route::get('logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+
+        Route::group(['prefix' => 'manage', 'as' => 'manage.'], function () {
+
+            Route::resource('company', App\Http\Controllers\CompanyController::class);
+
+        });
+
+    });
+});

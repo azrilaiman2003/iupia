@@ -55,6 +55,11 @@ return [
             'driver' => 'session',
             'provider' => 'supervisors',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -93,6 +98,11 @@ return [
         'supervisors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Supervisor::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
