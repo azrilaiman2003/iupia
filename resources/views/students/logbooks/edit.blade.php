@@ -5,7 +5,7 @@
 <div class="bg-white dark:bg-gray-900 rounded-lg">
     <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <h2 class="mb-4 text-xl text-center font-bold text-gray-900 dark:text-white">LAPORAN HARIAN LATIHAN INDUSTRI</h2>
-        <form method="PUT" action="{{ route('logbook.update', ['logbook' => $logbook]) }}">
+        <form method="PUT" action="{{ route('student.logbook.update', ['logbook' => $logbook]) }}">
             @csrf
             <div class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div>

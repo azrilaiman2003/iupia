@@ -12,7 +12,7 @@
 
         <!-- Your existing form goes here -->
 
-        <iframe src="{{ route('logbook.pdf', ['id' => $logbook->id]) }}" width="100%" height="600px"></iframe>
+        <iframe src="{{ route('student.logbook.pdf', ['id' => $logbook->id]) }}" width="100%" height="600px"></iframe>
 
         <!-- Your existing content goes here -->
     </div>

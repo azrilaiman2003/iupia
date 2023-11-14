@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller as Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,18 +24,46 @@ Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegist
 Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
 Route::get('/logout', 'App\Http\Controllers\Auth\LogoutController@logout')->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
-    //LogBook
-    Route::get('me/logbook','App\Http\Controllers\LogbookController@index')->name('logbook');
-    Route::get('me/logbook/create','App\Http\Controllers\LogbookController@create')->name('logbook.create');
-    Route::post('me/logbook/store','App\Http\Controllers\LogbookController@store')->name('logbook.store');
-    Route::get('me/logbook/{logbook}','App\Http\Controllers\LogbookController@show')->name('logbook.show');
-    Route::get('me/logbook/{logbook}/edit','App\Http\Controllers\LogbookController@edit')->name('logbook.edit');
-    Route::put('me/logbook/{logbook}','App\Http\Controllers\LogbookController@update')->name('logbook.update');
-    Route::get('me/logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+// Routes for students
+Route::get('/student/login', [App\Http\Controllers\Auth\StudentLoginController::class, 'showLoginForm'])->name('student.login');
+Route::post('/student/login', [App\Http\Controllers\Auth\StudentLoginController::class, 'login']);
+Route::middleware(['auth:student'])->group(function () {
 
+    Route::group(['prefix' => 'student', 'as' => 'student.'], function () {
+
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+        Route::post('logout', [App\Http\Controllers\Auth\StudentLoginController::class, 'logout'])->name('logout');
+
+        //First Time Login
+        Route::middleware('first_time_login')->group(function () {
+            Route::get('verification', [App\Http\Controllers\Auth\StudentLoginController::class, 'showVerificationForm'])->name('verification');
+            Route::post('verify', [App\Http\Controllers\Auth\StudentLoginController::class, 'verify'])->name('verify');
+        });
+        Route::get('/password/change', [App\Http\Controllers\Auth\StudentPasswordController::class, 'showChangePasswordForm'])->name('password.change');
+        Route::post('/password/change', [App\Http\Controllers\Auth\StudentPasswordController::class, 'changePassword'])->name('password.update');
+
+        //LogBook
+        Route::resource('logbook', App\Http\Controllers\LogbookController::class);
+        Route::get('logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+    });
+});
+
+
+// Routes for industry
+Route::get('/industry/login', [App\Http\Controllers\Auth\IndustryLoginController::class, 'showLoginForm'])->name('industry.login');
+Route::post('/industry/login', [App\Http\Controllers\Auth\IndustryLoginController::class, 'login']);;
+Route::middleware(['auth:industry'])->group(function () {
+
+    Route::group(['prefix' => 'industry', 'as' => 'industry.'], function () {
+
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+        //LogBook
+        Route::resource('logbook', App\Http\Controllers\LogbookController::class);
+        Route::get('logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+    });
 });

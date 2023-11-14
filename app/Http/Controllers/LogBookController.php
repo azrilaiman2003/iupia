@@ -16,8 +16,14 @@ class LogbookController extends Controller
 
     public function index()
     {
+        $studentId = auth()->user()->id;
 
-        $logbooks = Logbook::orderBy('id', 'DESC')->paginate($this->paginate);
+        $logbookIds = LogbookRelay::where('student_id', $studentId)
+        ->pluck('logbook_id');
+
+        $logbooks = Logbook::whereIn('id', $logbookIds)
+        ->orderBy('id', 'DESC')
+        ->paginate($this->paginate);
 
         $logbooks->each(function ($logbook) {
             $logbook->categoryLabel = $this->getCategoryLabel($logbook->category);
@@ -33,6 +39,17 @@ class LogbookController extends Controller
 
     public function show(Logbook $logbook)
     {
+        $studentId = auth()->user()->id;
+
+        $hasPermission = LogbookRelay::where('student_id', $studentId)
+        ->where('logbook_id', $logbook->id)
+        ->exists();
+
+        if (!$hasPermission) {
+            return redirect()->route('student.logbook.index')
+                ->with('error', 'You do not have permission to view this logbook.');
+        }
+
         return view('students.logbooks.show', [
             'logbook' => $logbook,
             'category' => $this->getCategoryLabel($logbook->category),
@@ -41,6 +58,17 @@ class LogbookController extends Controller
 
     public function edit(Logbook $logbook)
     {
+        $studentId = auth()->user()->id;
+
+        $hasPermission = LogbookRelay::where('student_id', $studentId)
+        ->where('logbook_id', $logbook->id)
+        ->exists();
+
+        if (!$hasPermission) {
+            return redirect()->route('student.logbook.index')
+                ->with('error', 'You do not have permission to edit this logbook.');
+        }
+
         return view('students.logbooks.edit', compact('logbook'));
     }
 
@@ -58,7 +86,8 @@ class LogbookController extends Controller
             'field4' => 'required',
         ]);
 
-        $date = Carbon::createFromFormat('d-M-Y', $request->input('date'))->format('Y-m-d');
+        $date = Carbon::createFromFormat('d/m/Y', $request->input('date'))->format('Y-m-d');
+
         $request->merge(['date' => $date]);
 
         $logbook = new Logbook($request->all());
@@ -71,7 +100,7 @@ class LogbookController extends Controller
             'student_id' => $studentId,
         ]);
 
-        return redirect()->route('logbook')
+        return redirect()->route('student.logbook.index')
             ->with('success', 'Logbook created successfully.');
     }
 
@@ -100,6 +129,18 @@ class LogbookController extends Controller
 
     public function destroy(Logbook $logbook)
     {
+
+        $studentId = auth()->user()->id;
+
+        $hasPermission = LogbookRelay::where('student_id', $studentId)
+        ->where('logbook_id', $logbook->id)
+        ->exists();
+
+        if (!$hasPermission) {
+            return redirect()->route('student.logbook.index')
+                ->with('error', 'You do not have permission to delete this logbook.');
+        }
+
         $logbook->delete();
 
         return redirect()->route('logbook')

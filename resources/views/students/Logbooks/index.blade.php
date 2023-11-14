@@ -1,4 +1,8 @@
-@extends('layouts.partials.main')
+@extends('layouts.partials.main', [
+    'breadcrumb_pages' => [
+        'Dashboard' => route('student.logbook.index'),
+],
+])
 
 @section('content')
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -111,13 +115,13 @@
                                 <div id="dropdown_{{ $logbook->id }}" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton_{{ $logbook->id }}">
                                         <li>
-                                            <a href="{{ route('logbook.show', ['logbook' => $logbook])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                            <a href="{{ route('student.logbook.show', ['logbook' => $logbook])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('logbook.edit', ['logbook' => $logbook])}}" target="_blank" onclick="downloadPdf()" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                            <a href="{{ route('student.logbook.edit', ['logbook' => $logbook])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('logbook.pdf', ['id' => $logbook])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Download</a>
+                                            <a href="{{ route('student.logbook.pdf', ['id' => $logbook])}}" target="_blank" onclick="downloadPdf()" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Download</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
@@ -179,8 +183,3 @@
         </div>
     </div>
 @endsection
-<script>
-    function downloadPdf() {
-        window.location.href = "{{ route('logbook.pdf', ['id' => '$logbookId']) }}/";
-    }
-</script>
