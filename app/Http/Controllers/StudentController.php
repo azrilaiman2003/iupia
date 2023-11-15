@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\Industry;
+use App\Models\Logbook;
+use App\Models\LogbookRelay;
 
 class StudentController extends Controller
 {
@@ -10,12 +14,27 @@ class StudentController extends Controller
 
     public function index()
     {
+        $companyId = auth()->user()->company_id;
 
-        $supervisorId = auth()->user()->id;
-
-        $students = Student::orderBy('id', 'DESC')
+        $students = Student::where('company_id', $companyId)
+            ->whereNotNull('company_id')
+            ->orderBy('id', 'DESC')
             ->paginate($this->paginate);
 
-        return view('students.index', compact('students'));
+        return view('industries.students.index', compact('students'));
+    }
+
+    public function logbook($studentId)
+    {
+
+        $student = Student::findOrFail($studentId);
+        $logbookIds = LogbookRelay::where('student_id', $studentId)->pluck('logbook_id')->toArray();
+
+        $logbooks = Logbook::whereIn('id', $logbookIds)
+            ->orderBy('id', 'DESC')
+            ->paginate($this->paginate);
+
+        return view('industries.students.logbooks.index', compact('logbooks', 'student'));
+
     }
 }

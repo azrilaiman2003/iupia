@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Company;
+use App\Models\Companies;
 
 class CompanyController extends Controller
 {
     public function index()
     {
-        $companies = Company::orderBy('id', 'DESC')->paginate(10);
+        $companies = Companies::orderBy('id', 'DESC')->paginate(10);
 
         return view('admins.companies.index', compact('companies'));
     }
@@ -28,12 +28,12 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'company_name' => 'required|unique:company,company_name',
+            'company_name' => 'required|unique:companies,company_name',
         ]);
 
         $input = $request->all();
 
-        Company::create($input);
+        Companies::create($input);
 
         return redirect()->route('admin.manage.company.index')
             ->with('success', "Company $request->company_name created successfully.");
@@ -41,14 +41,14 @@ class CompanyController extends Controller
 
     public function edit($id)
     {
-        $company = Company::findOrFail($id);
+        $company = Companies::findOrFail($id);
 
         return view('admins.companies.edit', compact('company'));
     }
 
     public function destroy($id)
     {
-        $company = Company::findOrFail($id);
+        $company = Companies::findOrFail($id);
         $company->delete();
 
         return redirect()->route('admin.manage.company.index')

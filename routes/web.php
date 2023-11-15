@@ -52,7 +52,7 @@ Route::middleware(['auth:student'])->group(function () {
 });
 
 
-// Routes for industrial supervisors
+// Routes for industries supervisors
 Route::get('/industry/login', [App\Http\Controllers\Auth\IndustryLoginController::class, 'showLoginForm'])->name('industry.login');
 Route::post('/industry/login', [App\Http\Controllers\Auth\IndustryLoginController::class, 'login']);;
 Route::middleware(['auth:industry'])->group(function () {
@@ -62,9 +62,11 @@ Route::middleware(['auth:industry'])->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
-        //LogBook
-        Route::resource('logbook', App\Http\Controllers\LogbookController::class);
-        Route::get('logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+
+        //Logbook
+        Route::resource('/student', App\Http\Controllers\StudentController::class);
+        Route::get('/student/logbook/{id}', [App\Http\Controllers\StudentController::class, 'logbook'])->name('student.logbook');
+        Route::get('/logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
     });
 });
 

@@ -48,7 +48,7 @@ return [
 
         'industry' => [
             'driver' => 'session',
-            'provider' => 'industrial',
+            'provider' => 'industries',
         ],
 
         'supervisor' => [
@@ -90,7 +90,7 @@ return [
             'model' => App\Models\Student::class,
         ],
 
-        'industrial' => [
+        'industries' => [
             'driver' => 'eloquent',
             'model' => App\Models\Industry::class,
         ],

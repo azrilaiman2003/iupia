@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        DB::table('industrial')->insert([
+        DB::table('industries')->insert([
             'name' => 'Industry',
             'email' => 'industry@gmail.com',
             'company' => 'BAYAM (M) SDN BHD',
