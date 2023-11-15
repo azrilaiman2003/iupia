@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->integer('company_id')->nullable();
+            $table->foreignId('import_student_id')->nullable()->index();
+            $table->string('ic_number')->unique();
+            $table->string('college_number')->unique();
             $table->boolean('is_first_login')->default(true);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

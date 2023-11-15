@@ -107,6 +107,9 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::group(['prefix' => 'manage', 'as' => 'manage.'], function () {
 
             Route::resource('company', App\Http\Controllers\CompanyController::class);
+            Route::resource('import-student', App\Http\Controllers\ImportStudentController::class);
+            Route::get('/import-student/sample', [Controllers\ImportStudentController::class, 'sample'])->name('import-student.sample');
+            Route::post('import-student/{importStudent}/upload', [App\Http\Controllers\ImportStudentController::class, 'upload'])->name('import-student.upload');
 
         });
 

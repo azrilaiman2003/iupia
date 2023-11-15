@@ -13,6 +13,11 @@ class Student extends Authenticatable
 
     protected $fillable = [
         'name',
+        'ic_number',
+        'college_number',
+        'phone',
+        'company_id',
+        'import_student_id',
         'email',
         'password',
         'is_first_login',

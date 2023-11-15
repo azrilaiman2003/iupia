@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('students')->insert([
             'name' => 'Student',
+            'ic_number' => '000000000000',
+            'college_number' => '0000000000',
+            'is_first_login' => false,
             'email' => 'student@gmail.com',
             'phone' => '601124371722',
             'password' => Hash::make('ayam12345'),
