@@ -19,15 +19,21 @@ class CompanyController extends Controller
 
     public function show(Companies $company)
     {
-        $students = Student::all();
-        $supervisors = Supervisor::all();
-        $industries = Industry::all();
+        $students = Student::paginate(1);
+        $totalStudentsCount = Student::count();
+        $supervisors = Supervisor::paginate(1);
+        $totalSupervisorsCount = Supervisor::count();
+        $industries = Industry::paginate(1);
+        $totalIndustriesCount = Industry::count();
 
         return view('admins.companies.show', [
             'students' => $students,
+            'totalStudentsCount' => $totalStudentsCount,
             'supervisors' => $supervisors,
+            'totalSupervisorsCount' => $totalSupervisorsCount,
             'industries' => $industries,
             'company' => $company,
+            'totalIndustriesCount' => $totalIndustriesCount,
         ]);
     }
 

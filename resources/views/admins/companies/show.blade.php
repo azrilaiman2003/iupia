@@ -18,18 +18,22 @@
             </select>
         </div>
 
-        <div id="studentTable" class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg" style="display: none;">
-            @component('components.student-table', ['students' => $students, 'companyId' => $company])
+        <div id="studentTable" class="mt-20 relative overflow-x-auto shadow-md sm:rounded-lg" style="display: none;">
+            @component('components.student-table', [
+                'students' => $students,
+                'companyId' => $company,
+                'totalStudentsCount' => $totalStudentsCount,
+            ])
             @endcomponent
         </div>
 
-        <div id="industryTable" class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg" style="display: none;">
-            @component('components.industry-table', ['industries' => $industries, 'companyId' => $company])
+        <div id="industryTable" class="mt-20 relative overflow-x-auto shadow-md sm:rounded-lg" style="display: none;">
+            @component('components.industry-table', ['industries' => $industries, 'companyId' => $company, 'totalIndustriesCount' => $totalIndustriesCount,])
             @endcomponent
         </div>
 
-        <div id="supervisorTable" class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg" style="display: none;">
-            @component('components.supervisor-table', ['supervisors' => $supervisors, 'companyId' => $company])
+        <div id="supervisorTable" class="mt-20 relative overflow-x-auto shadow-md sm:rounded-lg" style="display: none;">
+            @component('components.supervisor-table', ['supervisors' => $supervisors, 'companyId' => $company, 'totalSupervisorsCount' => $totalSupervisorsCount,])
             @endcomponent
         </div>
 
@@ -42,9 +46,25 @@
             const industryTable = document.getElementById('industryTable');
             const supervisorTable = document.getElementById('supervisorTable');
 
+            // Retrieve the saved 'Assign to' value from local storage
+            const selectedOption = localStorage.getItem('selectedOption');
+
+            // Set the dropdown value if it exists in local storage
+            if (selectedOption) {
+                assignToSelect.value = selectedOption;
+                toggleTableVisibility(selectedOption);
+            }
+
             assignToSelect.addEventListener('change', function() {
                 const selectedOption = assignToSelect.value;
 
+                // Save the selected value to local storage
+                localStorage.setItem('selectedOption', selectedOption);
+
+                toggleTableVisibility(selectedOption);
+            });
+
+            function toggleTableVisibility(selectedOption) {
                 studentTable.style.display = 'none';
                 industryTable.style.display = 'none';
                 supervisorTable.style.display = 'none';
@@ -56,7 +76,7 @@
                 } else if (selectedOption === '3') {
                     supervisorTable.style.display = 'block';
                 }
-            });
+            }
         });
     </script>
 @endsection
