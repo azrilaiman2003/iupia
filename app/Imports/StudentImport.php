@@ -13,9 +13,9 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation
 
     public $student_import_id;
 
-    public function __construct($admission_id)
+    public function __construct($student_import_id)
     {
-        $this->student_import_id = $admission_id;
+        $this->student_import_id = $student_import_id;
     }
 
     public function model(array $row)
