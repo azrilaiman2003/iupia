@@ -39,7 +39,7 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation
 
                 'password' => bcrypt($row['ic_number']),
 
-                'student_import_id' => $this->student_import_id,
+                'import_student_id' => $this->student_import_id,
             ]);
 
             return $student;

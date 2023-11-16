@@ -50,6 +50,20 @@ class ImportStudentController extends Controller
         ]);
     }
 
+    public function update(Request $request, ImportStudent $importStudent)
+    {
+        $request->validate([
+            'name' => 'required|unique:import_students,name,' . $importStudent->id,
+        ]);
+
+        $input = $request->all();
+
+        $importStudent->update($input);
+
+        return redirect()->route('admin.manage.import-student.index')
+            ->with('success', "Import Student $request->name updated successfully.");
+    }
+
     public function upload(Request $request, ImportStudent $importStudent)
     {
         try {

@@ -57,12 +57,11 @@
                             form.querySelector('#submit_button').click();
                         }
                     </script>
-                    <a href="{{ route('admin.manage.import-student.sample') }}"
-                    >
-                    <button>
-                    Download Sample Format
-                    </button>
-                </a>
+                    <a href="{{ route('admin.manage.import-student.sample') }}">
+                        <button>
+                            Download Sample Format
+                        </button>
+                    </a>
                     <div class="flex items-center space-x-3 w-full md:w-auto">
                         <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
                             class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -132,6 +131,9 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-4 py-3">Name</th>
+                            <th scope="col" class="px-4 py-3">Student ID</th>
+                            <th scope="col" class="px-4 py-3">Phone Number</th>
+                            <th scope="col" class="px-4 py-3">Email</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,6 +143,18 @@
                                     <th scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $item->name }}
+                                    </th>
+                                    <th scope="row"
+                                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $item->college_number }}
+                                    </th>
+                                    <th scope="row"
+                                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $item->phone }}
+                                    </th>
+                                    <th scope="row"
+                                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $item->email }}
                                     </th>
                                     {{-- <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="dropdownButton_{{ $item->id }}" data-dropdown-toggle="dropdown_{{ $item->id }}" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
