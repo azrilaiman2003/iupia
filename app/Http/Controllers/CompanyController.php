@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Companies;
+use App\Models\Student;
+use App\Models\Supervisor;
+use App\Models\Industry;
 
 class CompanyController extends Controller
 {
@@ -14,11 +17,52 @@ class CompanyController extends Controller
         return view('admins.companies.index', compact('companies'));
     }
 
-    public function show()
+    public function show(Companies $company)
     {
+        $students = Student::all();
+        $supervisors = Supervisor::all();
+        $industries = Industry::all();
 
-        return view('admins.companies.index');
+        return view('admins.companies.show', [
+            'students' => $students,
+            'supervisors' => $supervisors,
+            'industries' => $industries,
+            'company' => $company,
+        ]);
     }
+
+    public function assignToCompany(Request $request, $assignTo, $assigneeId, $companyId)
+    {
+        $company = Companies::find($companyId);
+
+        if ($company) {
+            if ($assignTo === 'student') {
+                $student = Student::find($assigneeId);
+                if ($student) {
+                    $student->company_id = $company->id;
+                    $student->save();
+                    return redirect()->back()->with('success', 'Student assigned to company successfully');
+                }
+            } elseif ($assignTo === 'supervisor') {
+                $supervisor = Supervisor::find($assigneeId);
+                if ($supervisor) {
+                    $supervisor->company_id = $company->id;
+                    $supervisor->save();
+                    return redirect()->back()->with('success', 'Supervisor assigned to company successfully');
+                }
+            } elseif ($assignTo === 'industry') {
+                $industry = Industry::find($assigneeId);
+                if ($industry) {
+                    $industry->company_id = $company->id;
+                    $industry->save();
+                    return redirect()->back()->with('success', 'Industry assigned to company successfully');
+                }
+            }
+        }
+
+        return redirect()->back()->with('error', 'Failed to assign');
+    }
+
 
     public function create()
     {
@@ -54,5 +98,4 @@ class CompanyController extends Controller
         return redirect()->route('admin.manage.company.index')
             ->with('success', "Company $company->company_name deleted successfully.");
     }
-
 }
