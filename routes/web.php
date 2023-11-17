@@ -67,6 +67,9 @@ Route::middleware(['auth:industry'])->group(function () {
         Route::resource('/student', App\Http\Controllers\StudentController::class);
         Route::get('/student/logbook/{id}', [App\Http\Controllers\StudentController::class, 'logbook'])->name('student.logbook');
         Route::get('/logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+
+        //Setting
+        Route::resource('/setting', App\Http\Controllers\SettingController::class);
     });
 });
 

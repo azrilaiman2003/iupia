@@ -15,11 +15,14 @@ return new class extends Migration
         Schema::create('industries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('company');
+            $table->string('phone');
             $table->integer('company_id')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('digital_signature')->nullable();
+            $table->string('company_stamp')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
