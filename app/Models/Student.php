@@ -32,4 +32,14 @@ class Student extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function logbookRelay()
+    {
+        return $this->hasMany(LogbookRelay::class, 'student_id');
+    }
 }

@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         DB::table('industries')->insert([
             'name' => 'Industry',
             'email' => 'industry@gmail.com',
-            'company' => 'BAYAM (M) SDN BHD',
+            'phone' => '601544371722',
             'password' => Hash::make('ayam12345'),
             'created_at' => now(),
             'updated_at' => now(),
@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Supervisor',
             'email' => 'supervisor@gmail.com',
             'password' => Hash::make('ayam12345'),
+            'phone' => '601124371432',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

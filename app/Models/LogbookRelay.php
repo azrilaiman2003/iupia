@@ -15,4 +15,14 @@ class LogbookRelay extends Model
         'logbook_id',
         'student_id',
     ];
+
+    public function logbook()
+    {
+        return $this->belongsTo(Logbook::class, 'logbook_id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
 }

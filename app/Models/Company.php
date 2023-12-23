@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Companies extends Model
+class Company extends Model
 {
     use HasFactory;
 
@@ -14,5 +14,10 @@ class Companies extends Model
     protected $fillable = [
         'company_name',
     ];
+
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'company_id');
+    }
 
 }

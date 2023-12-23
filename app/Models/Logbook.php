@@ -23,4 +23,9 @@ class Logbook extends Model
         'field4',
         'file',
     ];
+
+    public function logbookRelay()
+    {
+        return $this->hasMany(LogbookRelay::class, 'logbook_id');
+    }
 }

@@ -59,7 +59,7 @@
                     {{$item->email}}
                 </td>
                 <td class="px-6 py-4">
-                    {{$item->company_id?->name ?? 'Not Assigned'}}
+                    {{$item->company?->company_name ?? 'Not Assigned'}}
                 </td>
                 <td class="px-6 py-4">
                     {{$item->phone}}

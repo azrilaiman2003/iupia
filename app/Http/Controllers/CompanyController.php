@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Companies;
+use App\Models\Company;
 use App\Models\Student;
 use App\Models\Supervisor;
 use App\Models\Industry;
@@ -12,12 +12,12 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        $companies = Companies::orderBy('id', 'DESC')->paginate(10);
+        $companies = Company::orderBy('id', 'DESC')->paginate(10);
 
         return view('admins.companies.index', compact('companies'));
     }
 
-    public function show(Companies $company)
+    public function show(Company $company)
     {
         $students = Student::paginate(1);
         $totalStudentsCount = Student::count();
@@ -39,7 +39,7 @@ class CompanyController extends Controller
 
     public function assignToCompany(Request $request, $assignTo, $assigneeId, $companyId)
     {
-        $company = Companies::find($companyId);
+        $company = Company::find($companyId);
 
         if ($company) {
             if ($assignTo === 'student') {
@@ -83,7 +83,7 @@ class CompanyController extends Controller
 
         $input = $request->all();
 
-        Companies::create($input);
+        Company::create($input);
 
         return redirect()->route('admin.manage.company.index')
             ->with('success', "Company $request->company_name created successfully.");
@@ -91,14 +91,14 @@ class CompanyController extends Controller
 
     public function edit($id)
     {
-        $company = Companies::findOrFail($id);
+        $company = Company::findOrFail($id);
 
         return view('admins.companies.edit', compact('company'));
     }
 
     public function destroy($id)
     {
-        $company = Companies::findOrFail($id);
+        $company = Company::findOrFail($id);
         $company->delete();
 
         return redirect()->route('admin.manage.company.index')

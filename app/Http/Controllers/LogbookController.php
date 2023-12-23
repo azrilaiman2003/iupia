@@ -84,6 +84,7 @@ class LogbookController extends Controller
             'field2' => 'required',
             'field3' => 'required',
             'field4' => 'required',
+            'file' => 'nullable',
         ]);
 
         $date = Carbon::createFromFormat('d/m/Y', $request->input('date'))->format('Y-m-d');
