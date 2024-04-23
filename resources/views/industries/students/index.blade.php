@@ -100,7 +100,7 @@
                         @foreach($students as $item)
                         <tr class="border-b dark:border-gray-700">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <a href="{{ route('industry.student.logbook', $item->id) }}">{{ $item->name }}</a>
+                                <a href="{{ route('industry.student', $item->id) }}">{{ $item->name }}</a>
                             </th>
                             <td class="px-4 py-3">{{ $item->email }}</td>
                             <td class="px-4 py-3">{{ $item->phone }}</td>

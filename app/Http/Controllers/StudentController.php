@@ -24,7 +24,7 @@ class StudentController extends Controller
         return view('industries.students.index', compact('students'));
     }
 
-    public function logbook($studentId)
+    public function show($studentId)
     {
 
         $student = Student::findOrFail($studentId);
