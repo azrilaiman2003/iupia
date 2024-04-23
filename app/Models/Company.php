@@ -20,4 +20,14 @@ class Company extends Model
         return $this->hasMany(Student::class, 'company_id');
     }
 
+    public function supervisors()
+    {
+        return $this->hasMany(Supervisor::class, 'company_id');
+    }
+
+    public function industries()
+    {
+        return $this->hasMany(Industry::class, 'company_id');
+    }
+
 }

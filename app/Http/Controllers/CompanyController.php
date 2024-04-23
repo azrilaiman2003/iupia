@@ -72,13 +72,14 @@ class CompanyController extends Controller
 
     public function create()
     {
-        return view('admins.companies.index');
+        return view('admins.companies.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'company_name' => 'required|unique:companies,company_name',
+            'company_address' => 'required|string',
         ]);
 
         $input = $request->all();

@@ -213,11 +213,7 @@
                     <li>
                         <a href="{{ route('admin.manage.company.index')}}"
                             class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            Add Company</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Assign Company</a>
+                            Companies</a>
                     </li>
                 </ul>
             </li>

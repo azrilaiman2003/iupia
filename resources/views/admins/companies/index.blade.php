@@ -29,9 +29,8 @@
                 </div>
                 <div
                     class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" id="createCompanyModalButton" data-modal-target="createCompanyModal"
-                        data-modal-toggle="createCompanyModal"
-                        class="flex items-center justify-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                    <a href="{{route('admin.manage.company.create')}}">
+                    <button type="button" id="addCompany" class="flex items-center justify-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center me-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
                         <span class="mr-2">Add Company</span>
                         <svg class="w-3 h-3 text-blue-700 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
@@ -39,6 +38,7 @@
                                 d="M9 1v16M1 9h16" />
                         </svg>
                     </button>
+                </a>
                     <div class="flex items-center space-x-3 w-full md:w-auto">
                         <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
                             class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -128,8 +128,8 @@
                                     {{ $item->company_name }}</th>
                                 <td class="px-4 py-3">{{ $item->company_address }}</td>
                                 <td class="px-4 py-3">{{ $item->students()->count() }}</td>
-                                <td class="px-4 py-3">{{ '1' }}</td>
-                                <td class="px-4 py-3 max-w-[12rem] truncate">{{ '1' }}</td>
+                                <td class="px-4 py-3">{{ $item->supervisors()->count() }}</td>
+                                <td class="px-4 py-3">{{ $item->industries()->count() }}</td>
                                 <td class="px-4 py-3">{{ 'Active' }}</td>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="{{ 'company-' . $item->id . '-dropdown-button' }}"
