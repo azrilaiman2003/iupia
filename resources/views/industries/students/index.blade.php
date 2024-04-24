@@ -113,14 +113,14 @@
                                 <div id="dropdown_{{ $item->id }}" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton_{{ $item->id }}">
                                         <li>
-                                            <a href="{{ route('student.logbook.show', ['logbook' => $item])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                            <a href="{{ route('industry.student.show', ['studentId' => $item->id])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <a href="{{ route('student.logbook.edit', ['logbook' => $item])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                         </li>
                                         <li>
                                             <a href="{{ route('student.logbook.pdf', ['id' => $item])}}" target="_blank" onclick="downloadPdf()" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Download</a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                     <div class="py-1">
                                         <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>

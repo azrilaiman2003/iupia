@@ -110,14 +110,14 @@
                 ];
             @endphp
             @foreach($guardLinks as $guard => $link)
-            @if(auth()->guard($guard)->check())
+            {{-- @if(auth()->guard($guard)->check())
                 <li>
                     <a href="{{ route($link['route']) }}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         {!! $link['icon'] !!}
                         <span class="ml-3">{{ $link['text'] }}</span>
                     </a>
                 </li>
-            @endif
+            @endif --}}
         @endforeach
             <li>
                 <a href="#"

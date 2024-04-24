@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Logbook;
+use App\Models\Student;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
@@ -16,20 +17,62 @@ class LogbookController extends Controller
 
     public function index()
     {
-        $studentId = auth()->user()->id;
+        //student view
+        if (auth()->guard('student')->check()) {
+            $studentId = auth()->user()->id;
 
-        $logbookIds = LogbookRelay::where('student_id', $studentId)
-        ->pluck('logbook_id');
+            $logbookIds = LogbookRelay::where('student_id', $studentId)
+                ->pluck('logbook_id');
 
-        $logbooks = Logbook::whereIn('id', $logbookIds)
-        ->orderBy('id', 'DESC')
-        ->paginate($this->paginate);
+            $logbooks = Logbook::whereIn('id', $logbookIds)
+                ->orderBy('id', 'DESC')
+                ->paginate($this->paginate);
 
-        $logbooks->each(function ($logbook) {
-            $logbook->categoryLabel = $this->getCategoryLabel($logbook->category);
-        });
+            $logbooks->each(function ($logbook) {
+                $logbook->categoryLabel = $this->getCategoryLabel($logbook->category);
+            });
 
-        return view('students.logbooks.index', compact('logbooks'));
+            return view('students.logbooks.index', compact('logbooks'));
+        } else if (auth()->guard('industry')->check()) {
+            //industry supervisor view
+
+            $studentId = request()->route('studentId');
+
+            $logbookIds = LogbookRelay::where('student_id', $studentId)
+                ->pluck('logbook_id');
+
+            $logbooks = Logbook::whereIn('id', $logbookIds)
+                ->orderBy('id', 'DESC')
+                ->paginate($this->paginate);
+
+            $logbooks->each(function ($logbook) {
+                $logbook->categoryLabel = $this->getCategoryLabel($logbook->category);
+            });
+
+            return view('industries.students.logbooks.index', [
+                'logbooks' => $logbooks,
+                'studentId' => $studentId,
+            ]);
+
+        } else if (auth()->guard('supervisor')->check()) {
+            //college supervisor view
+            dd("college supervisor");
+        } else {
+            dd("else");
+        }
+    }
+
+    public function indexIndustry()
+    {
+
+        $companyId = auth()->user()->company_id;
+
+        $students = Student::where('company_id', $companyId)
+            ->whereNotNull('company_id')
+            ->orderBy('id', 'DESC')
+            ->paginate($this->paginate);
+
+        return view('industries.students.index', compact('students'));
     }
 
     public function create()
@@ -42,8 +85,8 @@ class LogbookController extends Controller
         $studentId = auth()->user()->id;
 
         $hasPermission = LogbookRelay::where('student_id', $studentId)
-        ->where('logbook_id', $logbook->id)
-        ->exists();
+            ->where('logbook_id', $logbook->id)
+            ->exists();
 
         if (!$hasPermission) {
             return redirect()->route('student.logbook.index')
@@ -61,8 +104,8 @@ class LogbookController extends Controller
         $studentId = auth()->user()->id;
 
         $hasPermission = LogbookRelay::where('student_id', $studentId)
-        ->where('logbook_id', $logbook->id)
-        ->exists();
+            ->where('logbook_id', $logbook->id)
+            ->exists();
 
         if (!$hasPermission) {
             return redirect()->route('student.logbook.index')
@@ -134,8 +177,8 @@ class LogbookController extends Controller
         $studentId = auth()->user()->id;
 
         $hasPermission = LogbookRelay::where('student_id', $studentId)
-        ->where('logbook_id', $logbook->id)
-        ->exists();
+            ->where('logbook_id', $logbook->id)
+            ->exists();
 
         if (!$hasPermission) {
             return redirect()->route('student.logbook.index')
