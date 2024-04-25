@@ -19,4 +19,5 @@ class IndustriesController extends Controller
 
         return view('industries.students.index', ['students' => $students]);
     }
+
 }
