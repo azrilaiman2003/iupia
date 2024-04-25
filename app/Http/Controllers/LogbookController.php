@@ -53,7 +53,6 @@ class LogbookController extends Controller
                 'logbooks' => $logbooks,
                 'studentId' => $studentId,
             ]);
-
         } else if (auth()->guard('supervisor')->check()) {
             //college supervisor view
             dd("college supervisor");
@@ -82,21 +81,49 @@ class LogbookController extends Controller
 
     public function show(Logbook $logbook)
     {
-        $studentId = auth()->user()->id;
+        //student view
+        if (auth()->guard('student')->check()) {
+            $studentId = auth()->user()->id;
 
-        $hasPermission = LogbookRelay::where('student_id', $studentId)
-            ->where('logbook_id', $logbook->id)
-            ->exists();
+            $hasPermission = LogbookRelay::where('student_id', $studentId)
+                ->where('logbook_id', $logbook->id)
+                ->exists();
 
-        if (!$hasPermission) {
-            return redirect()->route('student.logbook.index')
-                ->with('error', 'You do not have permission to view this logbook.');
+            if (!$hasPermission) {
+                return redirect()->route('student.logbook.index')
+                    ->with('error', 'You do not have permission to view this logbook.');
+            }
+
+            return view('students.logbooks.show', [
+                'logbook' => $logbook,
+                'category' => $this->getCategoryLabel($logbook->category),
+            ]);
+        } else if (auth()->guard('industry')->check()) {
+            //industry supervisor view
+            $studentId = request()->route('studentId');
+
+            $logbook = Logbook::findOrFail(request()->route('logbookId'));
+
+            // $hasPermission = LogbookRelay::where('student_id', $studentId)
+            //     ->where('logbook_id', $logbook->id)
+            //     ->exists();
+
+            // if (!$hasPermission) {
+            //     return redirect()->route('industry.student.show', $studentId)
+            //         ->with('error', 'You do not have permission to view this logbook.');
+            // }
+
+            return view('industries.students.logbooks.show', [
+                'logbook' => $logbook,
+                'category' => $this->getCategoryLabel($logbook->category),
+                'studentId' => $studentId,
+            ]);
+        } else if (auth()->guard('supervisor')->check()) {
+            //college supervisor view
+            dd("college supervisor");
+        } else {
+            dd("else");
         }
-
-        return view('students.logbooks.show', [
-            'logbook' => $logbook,
-            'category' => $this->getCategoryLabel($logbook->category),
-        ]);
     }
 
     public function edit(Logbook $logbook)

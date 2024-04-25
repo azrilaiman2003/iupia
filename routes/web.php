@@ -66,8 +66,8 @@ Route::middleware(['auth:industry'])->group(function () {
         //Logbook
         Route::get('/student', [App\Http\Controllers\IndustriesController::class, 'viewStudents'])->name('view.student');
         Route::get('/student/{studentId}', [App\Http\Controllers\LogbookController::class, 'index'])->name('student.show');
-        Route::get('/student/{studentId}/logbook/{logbookId}', [App\Http\Controllers\LogbookController::class, 'logbookIndustry'])->name('student.logbook.show');
-        Route::get('/logbook/{id}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+        Route::get('/student/{studentId}/logbook/{logbookId}', [App\Http\Controllers\LogbookController::class, 'show'])->name('student.logbook.show');
+        Route::get('logbook/{logbookId}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
 
         //Setting
         Route::resource('/setting', App\Http\Controllers\SettingController::class);
