@@ -8,7 +8,6 @@ use App\Models\Student;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
-use App\Models\LogbookRelay;
 
 class LogbookController extends Controller
 {
@@ -21,10 +20,7 @@ class LogbookController extends Controller
         if (auth()->guard('student')->check()) {
             $studentId = auth()->user()->id;
 
-            $logbookIds = LogbookRelay::where('student_id', $studentId)
-                ->pluck('logbook_id');
-
-            $logbooks = Logbook::whereIn('id', $logbookIds)
+            $logbooks = Logbook::whereIn('student_id', $studentId)
                 ->orderBy('id', 'DESC')
                 ->paginate($this->paginate);
 
@@ -38,10 +34,7 @@ class LogbookController extends Controller
 
             $studentId = request()->route('studentId');
 
-            $logbookIds = LogbookRelay::where('student_id', $studentId)
-                ->pluck('logbook_id');
-
-            $logbooks = Logbook::whereIn('id', $logbookIds)
+            $logbooks = Logbook::where('student_id', $studentId)
                 ->orderBy('id', 'DESC')
                 ->paginate($this->paginate);
 
@@ -85,7 +78,7 @@ class LogbookController extends Controller
         if (auth()->guard('student')->check()) {
             $studentId = auth()->user()->id;
 
-            $hasPermission = LogbookRelay::where('student_id', $studentId)
+            $hasPermission = Logbook::where('student_id', $studentId)
                 ->where('logbook_id', $logbook->id)
                 ->exists();
 
@@ -130,7 +123,7 @@ class LogbookController extends Controller
     {
         $studentId = auth()->user()->id;
 
-        $hasPermission = LogbookRelay::where('student_id', $studentId)
+        $hasPermission = Logbook::where('student_id', $studentId)
             ->where('logbook_id', $logbook->id)
             ->exists();
 
@@ -166,8 +159,7 @@ class LogbookController extends Controller
 
         $studentId = Auth::id();
 
-        LogbookRelay::create([
-            'logbook_id' => $logbook->id,
+        Logbook::update([
             'student_id' => $studentId,
         ]);
 
@@ -203,7 +195,7 @@ class LogbookController extends Controller
 
         $studentId = auth()->user()->id;
 
-        $hasPermission = LogbookRelay::where('student_id', $studentId)
+        $hasPermission = Logbook::where('student_id', $studentId)
             ->where('logbook_id', $logbook->id)
             ->exists();
 
@@ -241,5 +233,27 @@ class LogbookController extends Controller
             default:
                 return 'Unknown Category';
         }
+    }
+
+    public function approve($logbookId)
+    {
+        $logbook = Logbook::findOrFail($logbookId);
+
+        $logbook->update([
+            'status' => 1,
+        ]);
+
+        return redirect()->route('industry.view.student')
+            ->with('success', 'Logbook approved successfully.');
+    }
+
+    public function reject($logbookId)
+    {
+        $logbookId->update([
+            'status' => 2,
+        ]);
+
+        return redirect()->route('industry.view.student')
+            ->with('success', 'Logbook rejected successfully.');
     }
 }

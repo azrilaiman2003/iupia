@@ -24,8 +24,8 @@ class Logbook extends Model
         'file',
     ];
 
-    public function logbookRelay()
+    public function students()
     {
-        return $this->hasMany(LogbookRelay::class, 'logbook_id');
+        return $this->belongsTo(Student::class, 'student_id');
     }
 }

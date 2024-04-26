@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'student@gmail.com',
             'phone' => '601124371722',
             'password' => Hash::make('ayam12345'),
+            'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'industry@gmail.com',
             'phone' => '601544371722',
             'password' => Hash::make('ayam12345'),
+            'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -40,6 +42,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'supervisor@gmail.com',
             'password' => Hash::make('ayam12345'),
             'phone' => '601124371432',
+            'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -51,5 +54,27 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('companies')->insert([
+            'company_name' => 'Company',
+            'company_address' => 'Ipoh',
+        ]);
+
+        DB::table('logbook')->insert([
+            'category' => '1',
+            'title' => 'Title',
+            'date' => '2025-04-04',
+            'hari' => 'Khamis',
+            'location' => 'Ipoh',
+            'field1' => 'Field1',
+            'field2' => 'Field2',
+            'field3' => 'Field3',
+            'field4' => 'Field4',
+            'status' => '0',
+            'student_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
     }
 }

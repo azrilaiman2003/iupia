@@ -38,8 +38,8 @@ class Student extends Authenticatable
         return $this->belongsTo(Company::class, 'company_id');
     }
 
-    public function logbookRelay()
+    public function logbook()
     {
-        return $this->hasMany(LogbookRelay::class, 'student_id');
+        return $this->hasMany(Logbook::class, 'student_id');
     }
 }

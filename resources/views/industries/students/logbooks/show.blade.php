@@ -17,15 +17,15 @@
             <!-- Your existing content goes here -->
         </div>
     </div>
-    <div class="mt-4 divide-y divide-gray-200 overflow-hidden rounded-lh bg-white shadow">
+    <div class="mt-4 divide-y divide-gray-200 overflow-hidden rounded-lh bg-white shadow rounded-md">
         <div class="p-4 sm:px-6">
             {{ 'Interaction Zone' }}
         </div>
         <div class="p-4 py-5 sm:px-6">
-            <form method="POST" action="{{}}" onsubmit="return confirm('Do you sure you want to continue?');"
+            <form method="POST" action="{{route('industry.logbook.approve', ['logbookId' => $logbook->id])}}" onsubmit="return confirm('Do you sure you want to continue?');"
                 style="display: inline;">
                 @csrf
-                @method('PUT')
+                <input type="hidden" name="status" value="1">
                 <button type="submit"
                     class="text-sm text-white bg-green-500 hover:bg-green-700 py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                     Approve

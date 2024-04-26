@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('field2');
             $table->string('field3');
             $table->text('field4');
-            $table->string('file');
+            $table->string('file')->nullable();
+            $table->integer('status')->default(0);
+            $table->integer('student_id');
             $table->timestamps();
         });
     }
