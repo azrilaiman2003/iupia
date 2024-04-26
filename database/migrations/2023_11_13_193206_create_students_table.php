@@ -21,6 +21,10 @@ return new class extends Migration
             $table->string('college_number')->unique();
             $table->boolean('is_first_login')->default(true);
             $table->string('email')->unique();
+            $table->integer('programme_id')->nullable();
+            $table->string('profile_picture')->nullable();
+            $table->string('address')->nullable();
+            $table->string('heir_phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
