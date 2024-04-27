@@ -56,8 +56,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('companies')->insert([
-            'company_name' => 'Company',
-            'company_address' => 'Ipoh',
+            'name' => 'Company',
+            'address' => 'Ipoh',
+            'phone' => '601124371722',
+            'fax' => '601124371722',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         DB::table('logbook')->insert([
@@ -72,6 +76,16 @@ class DatabaseSeeder extends Seeder
             'field4' => 'Field4',
             'status' => '0',
             'student_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('institutions')->insert([
+            'logo' => 'logo/institution.jpeg',
+            'name' => 'Institution',
+            'address' => 'Ipoh',
+            'phone' => '601124371722',
+            'fax' => '601124371722',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

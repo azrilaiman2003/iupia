@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Controller as Controllers;
+use App\Models\institution;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,6 +69,7 @@ Route::middleware(['auth:industry'])->group(function () {
         Route::get('/student/{studentId}', [App\Http\Controllers\LogbookController::class, 'index'])->name('student.show');
         Route::get('/student/{studentId}/logbook/{logbookId}', [App\Http\Controllers\LogbookController::class, 'show'])->name('student.logbook.show');
         Route::get('logbook/{logbookId}/pdf', 'App\Http\Controllers\LogbookController@generatePDF')->name('logbook.pdf');
+        Route::get('logbook/pdf/{id}', [App\Http\Controllers\LogbookController::class, 'returnPdf'])->name('logbook.pdf.main');
         Route::post('logbook/{logbookId}/approve', [App\Http\Controllers\LogbookController::class, 'approve'])->name('logbook.approve');
         Route::post('logbook/{logbookId}/reject', [App\Http\Controllers\LogbookController::class, 'reject'])->name('logbook.reject');
 
@@ -107,6 +109,7 @@ Route::middleware(['auth:admin'])->group(function () {
             return view('dashboard');
         })->name('dashboard');
 
+
         //Student
         Route::get('student', [App\Http\Controllers\StudentController::class, 'index'])->name('student.index');
 
@@ -122,6 +125,8 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::post('import-student/{importStudent}/upload', [App\Http\Controllers\ImportStudentController::class, 'upload'])->name('import-student.upload');
             Route::post('/assign/{assignTo}/{assigneeId}/to/company/{companyId}', [App\Http\Controllers\CompanyController::class, 'assignToCompany'])
                 ->name('assign.to.company');
+            Route::get('institution', [App\Http\Controllers\InstitutionController::class, 'index'])->name('institution.index');
+            Route::post('institution', [App\Http\Controllers\InstitutionController::class, 'update'])->name('institution.update');
         });
     });
 });

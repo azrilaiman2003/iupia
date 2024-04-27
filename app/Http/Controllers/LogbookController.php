@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Logbook;
 use App\Models\Student;
+use App\Models\institution;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
@@ -219,6 +220,23 @@ class LogbookController extends Controller
         $pdf = PDF::loadView('students.logbooks.pdf', compact('logbook', 'categoryLabel'));
 
         return response($pdf->stream())->header('Content-Type', 'application/pdf');
+    }
+
+    public function returnPdf($id, Request $request){
+
+        $studentId = $request->input('student_id');
+        $companyId = $request->input('company_id');
+
+        if ($id == 'page1') {
+        $detail = institution::findOrFail(1);
+
+        $pdf = PDF::loadView('layouts.logbooks.main', compact('detail'));
+        return response($pdf->stream())->header('Content-Type', 'application/pdf');
+
+        } else if ($id == 'page2') {
+
+            dd("page2");
+        }
     }
 
     public function getCategoryLabel($category)
